@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lutente ERP — Selección de módulos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/paso_3_seleccion_modulos.css" />
+</head>
+<body>
+  <main id="onboarding-modulos" class="card" aria-labelledby="paso3-titulo">
+    <div
+      class="card__stepper"
+      role="progressbar"
+      aria-valuenow="3"
+      aria-valuemin="1"
+      aria-valuemax="5"
+      aria-valuetext="Paso 3 de 5"
+      aria-labelledby="paso3-step-label"
+    >
+      <div class="card__stepper-fill"></div>
+    </div>
+
+    <div class="card__inner">
+      <p id="paso3-step-label" class="card__progress-label">Paso 3 de 5</p>
+
+      <p id="stored-email-display" class="stored-email-display" aria-live="polite"></p>
+
+      <div class="card__brand">
+        <img
+          class="card__logo"
+          alt="Lutente"
+          src="../source/img/ElementosParaWeb1.png"
+          width="180"
+          height="48"
+        />
+      </div>
+
+      <h1 id="paso3-titulo" class="card__title">Selecciona los módulos para tu empresa</h1>
+      <p class="card__subtitle">
+        Elige las herramientas que mejor se adapten a tus necesidades. Podrás cambiarlas más adelante.
+      </p>
+
+      <form action="#" method="post">
+        <div class="modules">
+          <label class="module-card">
+            <input class="module-card__input" type="checkbox" name="modulos[]" value="ventas" checked />
+            <span class="module-card__check" aria-hidden="true">
+              <svg class="module-card__check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </span>
+            <span class="module-card__body">
+              <span class="module-card__heading">
+                <svg class="module-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                  <path d="M4 8h16v12H4zM9 12h6M12 16h.01" />
+                  <path d="M7 8V6a3 3 0 016 0v2" />
+                </svg>
+                <span class="module-card__title-text">Ventas</span>
+              </span>
+              <p class="module-card__desc">Gestiona todas tus ventas, cotizaciones y facturación.</p>
+            </span>
+          </label>
+
+          <label class="module-card">
+            <input class="module-card__input" type="checkbox" name="modulos[]" value="compras" checked />
+            <span class="module-card__check" aria-hidden="true">
+              <svg class="module-card__check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </span>
+            <span class="module-card__body">
+              <span class="module-card__heading">
+                <svg class="module-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                  <circle cx="9" cy="20" r="1" /><circle cx="18" cy="20" r="1" />
+                  <path d="M3 4h2l2 14h13l2-10H8" />
+                </svg>
+                <span class="module-card__title-text">Compras</span>
+              </span>
+              <p class="module-card__desc">Gestiona todas tus compras y órdenes de proveedores.</p>
+            </span>
+          </label>
+
+          <label class="module-card">
+            <input class="module-card__input" type="checkbox" name="modulos[]" value="inventario" checked />
+            <span class="module-card__check" aria-hidden="true">
+              <svg class="module-card__check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </span>
+            <span class="module-card__body">
+              <span class="module-card__heading">
+                <svg class="module-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                  <path d="M4 7h16v14H4zM9 11h6M9 15h4" /><path d="M8 7V5a4 4 0 018 0v2" />
+                </svg>
+                <span class="module-card__title-text">Inventario</span>
+              </span>
+              <p class="module-card__desc">Gestiona todos tus inventarios, stock y almacenes.</p>
+            </span>
+          </label>
+
+          <label class="module-card">
+            <input class="module-card__input" type="checkbox" name="modulos[]" value="caja" />
+            <span class="module-card__check" aria-hidden="true">
+              <svg class="module-card__check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </span>
+            <span class="module-card__body">
+              <span class="module-card__heading">
+                <svg class="module-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                  <rect x="3" y="6" width="18" height="14" rx="2" /><path d="M3 10h18M7 15h6" />
+                </svg>
+                <span class="module-card__title-text">Caja y finanzas</span>
+              </span>
+              <p class="module-card__desc">Gestiona tus finanzas, flujos de caja y bancos.</p>
+            </span>
+          </label>
+
+          <label class="module-card">
+            <input class="module-card__input" type="checkbox" name="modulos[]" value="cuentas" />
+            <span class="module-card__check" aria-hidden="true">
+              <svg class="module-card__check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </span>
+            <span class="module-card__body">
+              <span class="module-card__heading">
+                <svg class="module-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                  <path d="M6 4h12v18H6zM9 9h10M9 13h10M9 17h7" /><path d="M8 20V8" />
+                </svg>
+                <span class="module-card__title-text">Cuentas corrientes</span>
+              </span>
+              <p class="module-card__desc">Deudas, cuentas por cobrar y por pagar.</p>
+            </span>
+          </label>
+
+          <label class="module-card">
+            <input class="module-card__input" type="checkbox" name="modulos[]" value="rrhh" />
+            <span class="module-card__check" aria-hidden="true">
+              <svg class="module-card__check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </span>
+            <span class="module-card__body">
+              <span class="module-card__heading">
+                <svg class="module-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                  <circle cx="9" cy="8" r="3" /><circle cx="16" cy="10" r="2" /><path d="M4 21v-2a5 5 0 019-3 6 6 0 019 6" />
+                </svg>
+                <span class="module-card__title-text">Recursos humanos</span>
+              </span>
+              <p class="module-card__desc">Gestión de personal, nóminas y asistencia.</p>
+            </span>
+          </label>
+
+          <label class="module-card module-card--wide">
+            <input class="module-card__input" type="checkbox" name="modulos[]" value="logistica" />
+            <span class="module-card__check" aria-hidden="true">
+              <svg class="module-card__check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </span>
+            <span class="module-card__body">
+              <span class="module-card__heading">
+                <svg class="module-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                  <path d="M2 17h17l3-8H6l-2 8zM6 17l2-8h10" /><circle cx="8" cy="19" r="2" /><circle cx="17" cy="19" r="2" />
+                </svg>
+                <span class="module-card__title-text">Transporte y logística</span>
+              </span>
+              <p class="module-card__desc">Gestión de flotas, rutas y envíos.</p>
+            </span>
+          </label>
+        </div>
+
+        <div id="paso3-form-banner" class="notice" role="alert" aria-live="polite" hidden></div>
+
+        <div class="form-actions">
+          <button class="btn-back" id="btn-back-paso3" type="button">
+            <svg class="btn-back__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+            </svg>
+            Volver
+          </button>
+          <button class="btn-primary" type="submit">
+            Continuar
+            <svg class="btn-primary__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z" />
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+  <script src="../js/api-config.js"></script>
+  <script src="../js/onboarding-paso3-modulos.js" defer></script>
+  <script>
+    (function () {
+      var el = document.getElementById("stored-email-display");
+      if (!el) return;
+      var email = "";
+      try {
+        email = (localStorage.getItem("userEmail") || "").trim();
+      } catch (e) {}
+      var ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!email || !ok) {
+        el.textContent = "Sin correo en memoria · volvé al paso 1";
+        el.classList.add("stored-email-display--warn");
+      } else {
+        el.textContent = email;
+        el.classList.remove("stored-email-display--warn");
+      }
+    })();
+  </script>
+</body>
+</html>

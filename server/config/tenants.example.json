@@ -1,0 +1,11 @@
+[
+  {
+    "tenant": "demo",
+    "displayName": "Demo / Lutente",
+    "isMainSupport": true
+  },
+  {
+    "tenant": "ceccone",
+    "displayName": "Ceccone"
+  }
+]

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lutente ERP — Datos personales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/paso_2_datos_personales.css" />
+</head>
+<body>
+  <main
+    id="onboarding-personal"
+    class="card"
+    aria-labelledby="paso2-titulo"
+    data-endpoint-personal="/api/onboard/personal"
+    data-next-step="paso_3_seleccion_modulos.html"
+    data-back-step="../index.html"
+  >
+    <div
+      class="card__stepper"
+      role="progressbar"
+      aria-valuenow="2"
+      aria-valuemin="1"
+      aria-valuemax="5"
+      aria-valuetext="Paso 2 de 5"
+      aria-labelledby="paso2-step-label"
+    >
+      <div class="card__stepper-fill"></div>
+    </div>
+
+    <div class="card__inner">
+      <p id="paso2-step-label" class="card__progress-label">Paso 2 de 5</p>
+
+      <p id="stored-email-display" class="stored-email-display" aria-live="polite"></p>
+
+      <div class="card__brand">
+        <img
+          class="card__logo"
+          alt="Lutente"
+          src="../source/img/ElementosParaWeb1.png"
+          width="180"
+          height="48"
+        />
+      </div>
+
+      <h1 id="paso2-titulo" class="card__title">Datos personales</h1>
+      <p class="card__subtitle">Por favor, completa tus datos para continuar.</p>
+
+      <div
+        id="paso2-form-banner"
+        class="notice"
+        role="alert"
+        tabindex="-1"
+        hidden
+      ></div>
+
+      <form id="paso2-form" action="#" method="post" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label class="field__label" for="nombre">Nombre completo <span class="req" aria-hidden="true">*</span></label>
+            <input class="input" id="nombre" name="nombre" type="text" placeholder="Ej: Juan" required autocomplete="given-name" />
+            <p class="field__error" data-field-error="nombre" hidden aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label class="field__label" for="apellido">Apellido <span class="req" aria-hidden="true">*</span></label>
+            <input class="input" id="apellido" name="apellido" type="text" placeholder="Ej: Pérez" required autocomplete="family-name" />
+            <p class="field__error" data-field-error="apellido" hidden aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label class="field__label" for="telefono">Teléfono <span class="req" aria-hidden="true">*</span></label>
+            <input class="input" id="telefono" name="telefono" type="tel" placeholder="+54 9 11 1234 5678" required autocomplete="tel" />
+            <p class="field__error" data-field-error="telefono" hidden aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label class="field__label" for="empresa">Negocio / empresa</label>
+            <input class="input" id="empresa" name="empresa" type="text" placeholder="Nombre de tu empresa" autocomplete="organization" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="pais">País <span class="req" aria-hidden="true">*</span></label>
+            <div class="select-wrap">
+              <select class="select" id="pais" name="pais" required>
+                <option value="">Selecciona tu país</option>
+              </select>
+              <svg class="select-wrap__chev" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M7 10l5 5 5-5H7z" />
+              </svg>
+            </div>
+            <p class="field__error" data-field-error="pais" hidden aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label class="field__label" for="provincia">Provincia / estado / región <span class="req" aria-hidden="true">*</span></label>
+            <input
+              class="input"
+              id="provincia"
+              name="provincia"
+              type="text"
+              autocomplete="address-level1"
+              maxlength="50"
+              placeholder="Ej: Buenos Aires, Madrid, São Paulo…"
+              required
+            />
+            <p class="field__error" data-field-error="provincia" hidden aria-live="polite"></p>
+          </div>
+          <div class="field field--full">
+            <label class="field__label" for="mensaje">Mensaje adicional (opcional)</label>
+            <textarea class="textarea" id="mensaje" name="mensaje" rows="4" placeholder="¿Hay algo más que debamos saber?"></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-back" id="btn-back-paso2" type="button">
+            <svg class="btn-back__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+            </svg>
+            Volver
+          </button>
+          <button class="btn-primary" type="submit">
+            Continuar
+            <svg class="btn-primary__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z" />
+            </svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <script src="../js/api-config.js"></script>
+  <script src="../js/onboarding-paso2-personal.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lutente ERP — Resumen y generación</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/paso_4_resumen_y_generacion.css" />
+</head>
+<body>
+  <main id="onboarding-resumen" class="card" aria-labelledby="paso4-titulo">
+    <div
+      class="card__stepper"
+      role="progressbar"
+      aria-valuenow="4"
+      aria-valuemin="1"
+      aria-valuemax="5"
+      aria-valuetext="Paso 4 de 5"
+      aria-labelledby="paso4-step-label"
+    >
+      <div class="card__stepper-fill"></div>
+    </div>
+
+    <div id="summary-view" class="card__inner">
+      <p id="paso4-step-label" class="card__progress-label">Paso 4 de 5</p>
+
+      <div class="card__brand">
+        <img
+          class="card__logo"
+          alt="Lutente"
+          src="../source/img/ElementosParaWeb1.png"
+          width="180"
+          height="48"
+        />
+      </div>
+
+      <header class="card__intro">
+        <h1 id="paso4-titulo" class="card__title">Resumen de configuración</h1>
+        <p class="card__subtitle">
+          Revisa los datos del cliente y los módulos activos antes de generar el ambiente.
+        </p>
+      </header>
+
+      <div class="summary-stack">
+        <section class="summary-section" aria-labelledby="sec-cliente">
+          <h2 class="section-title" id="sec-cliente">
+            <svg class="section-title__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            Datos del cliente
+          </h2>
+          <div class="panel" id="panel-cliente"></div>
+        </section>
+
+        <section class="summary-section" aria-labelledby="sec-modulos">
+          <h2 class="section-title" id="sec-modulos">
+            <svg class="section-title__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" /><rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" />
+            </svg>
+            Módulos activos
+          </h2>
+          <div class="panel" id="panel-modulos"></div>
+        </section>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-back" id="btn-back-paso4" type="button">
+          <svg class="btn-back__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+          </svg>
+          Volver
+        </button>
+        <button class="btn-primary" type="button" id="btn-generate">
+          Generar ambiente
+          <svg class="btn-primary__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="generation-view" class="card__inner gen is-hidden" aria-live="polite">
+      <div class="gen__spinner-wrap">
+        <svg class="gen__spinner" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="8" stroke-dasharray="24 16" stroke-linecap="round" />
+        </svg>
+        <div class="gen__mark">
+            <img src="../source/img/logo.png" alt="Lutente" width="100" height="100">
+        </div>
+      </div>
+
+      <div class="gen__text-window">
+        <div class="gen__text-track">
+          <div class="gen__text-line">Preparando el entorno…</div>
+          <div class="gen__text-line">Generando bases de datos…</div>
+          <div class="gen__text-line">Generando página web…</div>
+          <div class="gen__text-line">Conectando servicios…</div>
+          <div class="gen__text-line">Realizando últimos ajustes…</div>
+          <div class="gen__text-line">Preparando el entorno…</div>
+        </div>
+      </div>
+
+      <div class="gen__bar">
+        <div class="gen__bar-fill" id="gen-progress"></div>
+      </div>
+      <div class="gen__bar-meta">
+        <span>Iniciando</span>
+        <span>Completado</span>
+      </div>
+      <p class="gen__hint">
+        Este proceso puede tomar unos minutos. Por favor, no cierres esta ventana mientras configuramos el ambiente de trabajo.
+      </p>
+    </div>
+  </main>
+
+  <script src="../js/onboarding-paso4-resumen.js" defer></script>
+</body>
+</html>

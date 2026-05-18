@@ -1,0 +1,1 @@
+window.__LUTENTE_API_BASE__ = "http://localhost:4000";

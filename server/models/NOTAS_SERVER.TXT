@@ -1,0 +1,42 @@
+FLOW:
+server.js --> itemRoutes.js --> itemController.js --> itemModel.js
+
+
+itemModel.js *****    itemController.js
+
+item
+itemUbicacion
+itemProveedor
+
+
+adminModel.js *****    adminController.js
+
+usuario
+entidad
+ubicacion
+subCategoria
+Categoria
+negocio
+
+
+transaccionModel.js *****    transaccionesController.js
+
+transaccion
+tipoTransaccion
+transaccionItem
+moneda
+medioDePago
+
+
+reportesModel.js *****         reportesController.js
+
+dashboard
+
+************************************************************************************************************************************************
+// ultimas modificaciones Maxi:
+27/01/2025
+server/controllers/transaccionController.js
+
+
+apt-get update
+apt-get install -y phantomjs

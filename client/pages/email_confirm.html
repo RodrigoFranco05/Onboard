@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lutente ERP — ¡Ambiente creado!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --surface-body: #ffffff;
+      --surface-muted: #f8f9fa;
+      --primary: #f4b10e;
+      --primary-hover: #d99d0c;
+      --on-primary: #1a1a1a;
+      --outline: #e4d8c9;
+      --text-muted: #9a8d7c;
+      --success: #10b981;
+      --shadow-card: 0px 4px 20px rgba(0, 0, 0, 0.05);
+      --radius-card: 12px;
+      --radius-control: 8px;
+      --focus-ring: rgba(244, 177, 14, 0.35);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      font-family: "Raleway", system-ui, -apple-system, sans-serif;
+      background: var(--surface-body);
+      color: var(--on-primary);
+    }
+
+    .card {
+      width: min(620px, 100%);
+      background: #ffffff;
+      border: 1px solid var(--outline);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    .card__stepper {
+      height: 4px;
+      background: var(--outline);
+    }
+
+    .card__stepper-fill {
+      height: 100%;
+      width: 100%;
+      background: var(--success);
+    }
+
+    .card__head-logo {
+      display: flex;
+      justify-content: center;
+      padding: 28px 24px;
+      padding-bottom: 20px;
+    }
+
+    .card__logo {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .card__body {
+      padding: 40px 48px 32px;
+      text-align: center;
+    }
+
+    @media (max-width: 520px) {
+      .card__body {
+        padding: 28px 20px 24px;
+      }
+    }
+
+    .success-ring {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.14);
+      color: var(--success);
+    }
+
+    .success-ring svg {
+      width: 42px;
+      height: 42px;
+    }
+
+    .card__title {
+      margin: 0 0 16px;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .card__subtitle {
+      margin: 0 0 32px;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--text-muted);
+      max-width: 30em;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .credentials {
+      text-align: left;
+      background: var(--surface-muted);
+      border: 1px solid var(--outline);
+      border-radius: var(--radius-control);
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+
+    .credentials__title {
+      margin: 0 0 20px;
+      padding-bottom: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--outline);
+    }
+
+    .cred-field {
+      margin-bottom: 20px;
+    }
+
+    .cred-field:last-child {
+      margin-bottom: 0;
+    }
+
+    .cred-field__label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .cred-row {
+      display: flex;
+      align-items: stretch;
+      border-radius: var(--radius-control);
+      overflow: hidden;
+      border: 1px solid var(--outline);
+    }
+
+    .cred-row__input {
+      flex: 1;
+      min-width: 0;
+      padding: 12px 14px;
+      font-family: ui-monospace, "Cascadia Code", monospace;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--on-primary);
+      background: #fff;
+      border: none;
+      outline: none;
+    }
+
+    .cred-row__input:focus-visible {
+      box-shadow: inset 0 0 0 2px var(--focus-ring);
+    }
+
+    .cred-row__btn {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      padding: 0;
+      border: none;
+      background: var(--surface-muted);
+      color: var(--text-muted);
+      cursor: pointer;
+      border-left: 1px solid var(--outline);
+    }
+
+    .cred-row__btn:hover {
+      background: #eee9e4;
+      color: var(--on-primary);
+    }
+
+    .cred-row__btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .cred-hint {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .cred-hint svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--primary);
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px 24px;
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--on-primary);
+      background: var(--primary);
+      border: none;
+      border-radius: var(--radius-control);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-primary__icon {
+      width: 22px;
+      height: 22px;
+    }
+
+    .card__foot {
+      padding: 16px;
+      background: var(--surface-muted);
+      border-top: 1px solid var(--outline);
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .card__foot a {
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .card__foot a:hover {
+      text-decoration: underline;
+    }
+
+    .progress-note {
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin: -8px 0 20px;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="card__stepper" aria-hidden="true"><div class="card__stepper-fill"></div></div>
+
+    <div class="card__head-logo">
+      <img
+        class="card__logo"
+        alt="Lutente"
+        src="../source/img/ElementosParaWeb1.png"
+        width="180"
+        height="48"
+      />
+    </div>
+
+    <div class="card__body">
+
+      <div class="success-ring" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+        </svg>
+      </div>
+
+      <h1 class="card__title">¡Email verificado con éxito!</h1>
+      <p class="card__subtitle" id="confirm-subtitle">
+        Tu correo electrónico fue verificado correctamente. Ya podés continuar con el onboarding.
+      </p>
+
+      <a class="btn-primary" href="../index.html">
+        Continuar
+        <svg class="btn-primary__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z" />
+        </svg>
+      </a>
+    </div>
+
+  </main>
+  <script>
+    (function () {
+      var params = new URLSearchParams(window.location.search);
+      var email = params.get('email');
+      var subtitle = document.getElementById('confirm-subtitle');
+      if (email && subtitle) {
+        subtitle.textContent = 'El correo ' + email + ' fue verificado correctamente. Ya podés continuar con el onboarding.';
+      }
+      if (email) {
+        try { localStorage.setItem('userEmail', email); } catch (e) { /* ignore */ }
+      }
+    })();
+  </script>
+</body>
+</html>

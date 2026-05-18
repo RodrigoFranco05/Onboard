@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lutente ERP — Registro demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/index.css" />
+</head>
+<body>
+  <main
+    id="onboarding-email"
+    class="card"
+    aria-labelledby="titulo-demo"
+  >
+    <div
+      class="card__stepper"
+      role="progressbar"
+      aria-valuenow="1"
+      aria-valuemin="1"
+      aria-valuemax="5"
+      aria-valuetext="Paso 1 de 5"
+      aria-labelledby="step-heading-text"
+    >
+      <div class="card__stepper-fill"></div>
+    </div>
+
+    <div class="card__inner">
+      <p id="step-heading-text" class="card__progress-label">Paso 1 de 5</p>
+      <div class="card__brand">
+        <img
+          class="card__logo"
+          alt="Lutente"
+          src="source/img/ElementosParaWeb1.png"
+        />
+      </div>
+
+      <div class="card__narrow">
+        <h1 id="titulo-demo" class="card__title">Obtén tu demo Gratuita Ahora!</h1>
+        <p class="card__subtitle">
+          Ingresa tu correo electrónico para comenzar. Se enviará un mail de confirmación para verificar tu identidad.
+        </p>
+
+        <div
+          id="email-step-banner"
+          class="notice"
+          role="alert"
+          tabindex="-1"
+          hidden
+        ></div>
+
+        <form id="email-step-form" action="#" method="post" novalidate>
+          <div class="field">
+            <label class="field__label" for="email">Correo Electrónico</label>
+            <div class="input-wrap">
+              <svg class="input-wrap__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16v12H4V6zm0 0l8 6 8-6" />
+              </svg>
+              <input
+                class="input-wrap__field"
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="email"
+                placeholder="tu@empresa.com"
+                required
+                aria-describedby="email-field-error"
+              />
+            </div>
+
+            <p id="email-field-error" class="field__error" role="status" aria-live="polite"></p>
+          </div>
+
+          <button class="btn-primary" type="button" onclick="emailVerification()">
+            Confirmar
+            <svg class="btn-primary__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z" />
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/api-config.js"></script>
+  <script src="js/onboarding-step1.js"></script>
+</body>
+</html>
