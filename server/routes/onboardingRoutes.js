@@ -8,11 +8,14 @@ const router = express.Router();
 router.get("/health", asyncHandler(onboardingController.health));
 router.post("/email/check", asyncHandler(onboardingController.checkEmailStatus));
 router.post("/email/request", asyncHandler(onboardingController.requestEmailVerification));
-router.get("/email/verify", asyncHandler(onboardingController.verifyEmail));
+router.get("/email/verify", (req, res) => {
+  const raw = req.query.token;
+  const token = typeof raw === "string" ? raw : "";
+  res.redirect(302, `/api/onboard/email/verify?token=${encodeURIComponent(token)}`);
+});
 
 router.post("/submissions", asyncHandler(onboardingController.createSubmission));
 router.get("/submissions", asyncHandler(onboardingController.listSubmissions));
 router.get("/submissions/:id", asyncHandler(onboardingController.getSubmissionById));
-router.post("/submissions/:id/generate-tenant", asyncHandler(onboardingController.generateTenant));
 
 module.exports = router;

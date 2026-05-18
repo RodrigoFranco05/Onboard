@@ -65,8 +65,12 @@ pnpm dev
 - `GET /api/onboarding/health`
 - `POST /api/onboarding/email/check`
 - `POST /api/onboarding/email/request`
-- `GET /api/onboarding/email/verify?token=...`
+- `GET /api/onboarding/email/verify?token=...` (redirección 302 a `/api/onboard/email/verify`; compatibilidad con enlaces antiguos)
+- `POST /api/onboard/getemailsconfirmed`
+- `POST /api/onboard/sendEmailConfirmation`
+- `GET /api/onboard/email/verify?token=...` (verificación de correo; enlace que envía el mail)
 - `POST /api/onboard/personal`
+- `POST /api/onboard/modulos`
 - `POST /api/onboarding/submissions`
 - `GET /api/onboarding/submissions?email=...`
 - `GET /api/onboarding/submissions/:id`

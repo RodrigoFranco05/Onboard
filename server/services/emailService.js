@@ -34,7 +34,7 @@ function getTransporter() {
 
 function buildVerificationUrl(token) {
   const appBaseUrl = process.env.APP_BASE_URL || "http://localhost:4000";
-  return `${appBaseUrl}/api/onboarding/email/verify?token=${encodeURIComponent(token)}`;
+  return `${appBaseUrl}/api/onboard/email/verify?token=${encodeURIComponent(token)}`;
 }
 
 async function sendMail({ to, subject, html, text }) {

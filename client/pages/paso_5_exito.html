@@ -13,6 +13,8 @@
   <main class="card">
     <div class="card__stepper" aria-hidden="true"><div class="card__stepper-fill"></div></div>
 
+    <p class="progress-note">Paso 5 de 5</p>
+
     <div class="card__head-logo">
       <img
         class="card__logo"
@@ -24,8 +26,6 @@
     </div>
 
     <div class="card__body">
-      <p class="progress-note">Paso 5 de 5 · 100%</p>
-
       <div class="success-ring" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
@@ -92,7 +92,7 @@
         </div>
       </div>
 
-      <a class="btn-primary" href="#">
+      <a class="btn-primary" id="btn-ir-sistema" href="#" rel="noopener">
         Ir al sistema
         <svg class="btn-primary__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
           <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z" />
@@ -107,6 +107,28 @@
 
   <script>
     (function () {
+      var RESULTADO_SESSION_KEY = "lutente_onboarding_resultado";
+      try {
+        var raw = sessionStorage.getItem(RESULTADO_SESSION_KEY);
+        if (raw) {
+          var cred = JSON.parse(raw);
+          if (cred && typeof cred === "object") {
+            var urlEl = document.getElementById("url-sistema");
+            var userEl = document.getElementById("usuario-field");
+            var passEl = document.getElementById("password-field");
+            var goBtn = document.getElementById("btn-ir-sistema");
+            if (urlEl && cred.url) urlEl.value = String(cred.url);
+            if (userEl && cred.user) userEl.value = String(cred.user);
+            if (passEl && cred.password != null) passEl.value = String(cred.password);
+            if (goBtn && cred.url) {
+              goBtn.setAttribute("href", String(cred.url));
+              goBtn.setAttribute("target", "_blank");
+            }
+          }
+          sessionStorage.removeItem(RESULTADO_SESSION_KEY);
+        }
+      } catch (e) {}
+
       function copyFromId(id) {
         var el = document.getElementById(id);
         if (!el) return;

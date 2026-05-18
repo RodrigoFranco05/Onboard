@@ -1,0 +1,6 @@
+1. el ambiente se genera mediante el script, pero al hacer login no funciona. averiar el por que. (los servers de onboarding y erp son diferentes, por lo que pueden estar a la veez abiertos) (seran las cookies o algo asi? tiene que conectarce a la bd correspoondiente)
+2. hacer que el usuario que se genere, no sea el default, sino el que genera el script, ya que nunca se carga.
+3. Definir uso gratuito durante 15 dias. luego ver como bloquear para exigir pago. 
+4. hacer que si selecciono ciertos modulos, se configure o no de esa manera. ver si utilizar seguridad, parametros o directamente no ejecutar esas tablas. 
+5. hacer mas bonitos los mails de informacion, ya se ala confirmacion o las credenciales.
+

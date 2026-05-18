@@ -54,8 +54,7 @@ body {
 .card__head-logo {
   display: flex;
   justify-content: center;
-  padding: 28px 24px;
-  padding-bottom: 20px;
+  padding: 12px 24px 20px;
 }
 
 .card__logo {
@@ -264,5 +263,6 @@ body {
   font-size: 13px;
   font-weight: 500;
   color: var(--text-muted);
-  margin: -8px 0 20px;
+  margin: 0;
+  padding: 20px 24px 0;
 }

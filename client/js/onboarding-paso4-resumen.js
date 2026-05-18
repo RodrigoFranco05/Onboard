@@ -7,6 +7,8 @@
   var STORED_EMAIL_KEY = "userEmail";
   var PERSONAL_KEY = "lutente_onboarding_personal";
   var MODULOS_KEY = "lutente_onboarding_modulos";
+  var REGISTRO_ID_KEY = "lutente_onboarding_registro_id";
+  var RESULTADO_SESSION_KEY = "lutente_onboarding_resultado";
 
   var MODULE_ORDER = [
     "ventas",
@@ -132,6 +134,55 @@
       "</div>";
   }
 
+  function getApiBase() {
+    if (typeof window.__LUTENTE_API_BASE__ === "string") {
+      return window.__LUTENTE_API_BASE__.replace(/\/$/, "");
+    }
+    return "";
+  }
+
+  function apiUrl(path) {
+    var base = getApiBase();
+    var p = path.charAt(0) === "/" ? path : "/" + path;
+    return base ? base + p : p;
+  }
+
+  function safeParse(txt) {
+    try {
+      return JSON.parse(txt);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function readRegistroId() {
+    try {
+      return (localStorage.getItem(REGISTRO_ID_KEY) || "").trim();
+    } catch (e) {
+      return "";
+    }
+  }
+
+  function showSummaryError(el, msg) {
+    if (!el) return;
+    el.textContent = msg || "";
+    el.classList.toggle("is-hidden", !msg);
+  }
+
+  function extractApiError(obj) {
+    if (!obj || typeof obj !== "object") return null;
+    var nestedErr = obj.error;
+    if (
+      nestedErr !== null &&
+      typeof nestedErr === "object" &&
+      typeof nestedErr.message === "string"
+    ) {
+      return nestedErr.message;
+    }
+    if (typeof obj.message === "string") return obj.message;
+    return null;
+  }
+
   function init() {
     fillClientePanel(document.getElementById("panel-cliente"));
     fillModulosPanel(document.getElementById("panel-modulos"));
@@ -147,13 +198,129 @@
     var summary = document.getElementById("summary-view");
     var gen = document.getElementById("generation-view");
     var bar = document.getElementById("gen-progress");
+    var errEl = document.getElementById("paso4-api-error");
     if (!btn || !summary || !gen || !bar) return;
+
+    var textWindow = gen.querySelector(".gen__text-window");
+    var textWindowDefaultHtml = textWindow ? textWindow.innerHTML : "";
+
     btn.addEventListener("click", function () {
+      showSummaryError(errEl, "");
+
+      var registroId = readRegistroId();
+      if (!registroId) {
+        showSummaryError(
+          errEl,
+          "Falta el identificador del registro. Completá el paso 2 con el servidor activo (no abras el flujo como archivo local)."
+        );
+        return;
+      }
+
+      btn.disabled = true;
+
       summary.classList.add("is-hidden");
       gen.classList.remove("is-hidden");
+
+      if (textWindow) {
+        textWindow.innerHTML = textWindowDefaultHtml;
+        textWindow.classList.remove("gen__text-window--done");
+      }
+      bar.classList.remove("is-complete");
       bar.classList.remove("is-animate");
       void bar.offsetWidth;
       bar.classList.add("is-animate");
+
+      function fail(msg) {
+        summary.classList.remove("is-hidden");
+        gen.classList.add("is-hidden");
+        showSummaryError(errEl, msg);
+        btn.disabled = false;
+      }
+
+      function finishSuccess(url, user, password) {
+        bar.classList.remove("is-animate");
+        void bar.offsetWidth;
+        bar.classList.add("is-complete");
+        if (textWindow) {
+          textWindow.innerHTML =
+            '<div class="gen__text-line gen__text-line--done">Completado</div>';
+          textWindow.classList.add("gen__text-window--done");
+        }
+        window.setTimeout(function () {
+          try {
+            sessionStorage.setItem(
+              RESULTADO_SESSION_KEY,
+              JSON.stringify({
+                url: String(url || ""),
+                user: String(user || ""),
+                password: String(password || "")
+              })
+            );
+          } catch (e) {}
+          window.location.href = "paso_5_exito.html";
+        }, 1000);
+      }
+
+      var reqUrl =
+        apiUrl(
+          "/api/onboard/submissions/" +
+            encodeURIComponent(registroId) +
+            "/generate-tenant"
+        );
+
+      fetch(reqUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: "{}",
+        credentials: "include"
+      })
+        .then(function (res) {
+          return res.text().then(function (txt) {
+            return { res: res, body: txt ? safeParse(txt) : null };
+          });
+        })
+        .then(function (out) {
+          var st = out.res.status;
+          if (st === 201) {
+            var d = out.body && out.body.data;
+            var cred = d && d.credentials;
+            if (!cred || typeof cred !== "object") {
+              fail("Respuesta inválida del servidor.");
+              return;
+            }
+            finishSuccess(cred.url, cred.user, cred.password);
+            return;
+          }
+          if (st === 200) {
+            var sub = out.body && out.body.data;
+            if (!sub || typeof sub !== "object") {
+              fail("Respuesta inválida del servidor.");
+              return;
+            }
+            var u = sub.url;
+            var mail = sub.correo || "";
+            if (!u) {
+              fail("El tenant no tiene URL registrada.");
+              return;
+            }
+            finishSuccess(
+              u,
+              mail,
+              "Revisá tu correo: el ambiente ya estaba creado y no podemos mostrar la contraseña de nuevo."
+            );
+            return;
+          }
+          var errMsg =
+            extractApiError(out.body) ||
+            "No pudimos generar el ambiente (código " + st + ").";
+          fail(errMsg);
+        })
+        .catch(function () {
+          fail("Error de conexión al servidor.");
+        });
     });
   }
 

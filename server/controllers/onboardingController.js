@@ -2,8 +2,7 @@ const { z } = require("zod");
 const { v4: uuidv4 } = require("uuid");
 
 const registroModel = require("../models/registroModel");
-const { sendTenantReadyEmail, sendVerificationEmail } = require("../services/emailService");
-//const { runTenantScript } = require("../services/tenantService");
+const { sendVerificationEmail } = require("../services/emailService");
 const { HttpError } = require("../utils/httpError");
 
 const allowedModules = [
@@ -18,10 +17,6 @@ const allowedModules = [
 
 const requestEmailSchema = z.object({
   email: z.string().trim().email()
-});
-
-const verifyTokenSchema = z.object({
-  token: z.string().trim().min(1)
 });
 
 const submissionSchema = z.object({
@@ -150,50 +145,6 @@ async function requestEmailVerification(req, res) {
   });
 }
 
-async function verifyEmail(req, res) {
-  const { token } = verifyTokenSchema.parse(req.query);
-
-  const registro = await registroModel.findByVerificationToken(token);
-  if (!registro) {
-    throw new HttpError(404, "Token de verificacion invalido", "TOKEN_NOT_FOUND");
-  }
-
-  if (registro.emailVerifiedAt) {
-    return res.status(200).json({
-      ok: true,
-      message: "El correo ya estaba verificado.",
-      data: {
-        correo: registro.correo,
-        verifiedAt: registro.emailVerifiedAt
-      }
-    });
-  }
-
-  if (
-    registro.verificationExpiresAt &&
-    new Date(registro.verificationExpiresAt).getTime() < Date.now()
-  ) {
-    throw new HttpError(400, "El token esta vencido. Solicita uno nuevo.", "TOKEN_EXPIRED");
-  }
-
-  const updated = await registroModel.markEmailVerifiedByToken(token);
-
-  const redirectUrl = process.env.FRONTEND_AFTER_VERIFY_URL;
-  if (redirectUrl) {
-    const nextUrl = `${redirectUrl}${redirectUrl.includes("?") ? "&" : "?"}verified=1&email=${encodeURIComponent(updated.correo)}`;
-    return res.redirect(302, nextUrl);
-  }
-
-  return res.status(200).json({
-    ok: true,
-    message: "Correo verificado correctamente.",
-    data: {
-      correo: updated.correo,
-      verifiedAt: updated.emailVerifiedAt
-    }
-  });
-}
-
 async function createSubmission(req, res) {
   const payload = submissionSchema.parse(req.body);
   const correo = normalizeEmail(payload.email);
@@ -261,78 +212,11 @@ async function getSubmissionById(req, res) {
   });
 }
 
-async function generateTenant(req, res) {
-  const id = assertValidId(req.params.id);
-  const submission = await registroModel.findById(id);
-
-  if (!submission) {
-    throw new HttpError(404, "Registro no encontrado", "SUBMISSION_NOT_FOUND");
-  }
-
-  ensureEmailVerified(submission);
-
-  if (submission.tenant && submission.url) {
-    return res.status(200).json({
-      ok: true,
-      message: "El tenant ya fue creado para este registro.",
-      data: submission
-    });
-  }
-
-  const tenantResult = 1 //await runTenantScript({
-  //   id: submission.id,
-  //   email: submission.correo,
-  //   nombre: submission.nombre,
-  //   apellido: submission.apellido,
-  //   empresa: submission.negocio,
-  //   negocio: submission.negocio,
-  //   modulos: submission.modulos
-  // });
-
-  const updatedSubmission = await registroModel.updateTenantResult(submission.id, {
-    tenant: tenantResult.tenant,
-    url: tenantResult.url,
-    estado: "tenant_created"
-  });
-
-  let mail = { mode: "not_sent" };
-  try {
-    mail = await sendTenantReadyEmail({
-      email: updatedSubmission.correo,
-      tenantUrl: tenantResult.url,
-      user: tenantResult.user,
-      password: tenantResult.password
-    });
-  } catch (mailError) {
-    mail = {
-      mode: "error",
-      error: mailError.message
-    };
-    console.error("[mail] error al enviar credenciales", mailError);
-  }
-
-  return res.status(201).json({
-    ok: true,
-    message: "Tenant creado correctamente.",
-    data: {
-      submission: updatedSubmission,
-      credentials: {
-        url: tenantResult.url,
-        user: tenantResult.user,
-        password: tenantResult.password
-      },
-      mail
-    }
-  });
-}
-
 module.exports = {
   health,
   checkEmailStatus,
   requestEmailVerification,
-  verifyEmail,
   createSubmission,
   listSubmissions,
-  getSubmissionById,
-  generateTenant
+  getSubmissionById
 };

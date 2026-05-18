@@ -18,6 +18,9 @@
   /** Misma clave que `onboarding-step1.js` (`redireccionPaso2`). */
   var STORED_EMAIL_KEY = "userEmail";
 
+  /** PK del registro onboard (paso 4 → generate-tenant). */
+  var REGISTRO_ID_KEY = "lutente_onboarding_registro_id";
+
   var KEYS = window.LUTENTE_ONBOARDING_KEYS || {
     PERSONAL: "lutente_onboarding_personal"
   };
@@ -486,6 +489,19 @@
           })
           .then(function (out) {
             if (out.res.ok) {
+              try {
+                var row =
+                  out.data &&
+                  typeof out.data === "object" &&
+                  out.data.data &&
+                  typeof out.data.data === "object"
+                    ? out.data.data
+                    : null;
+                var rid = row && row.id != null ? String(row.id).trim() : "";
+                if (rid) {
+                  localStorage.setItem(REGISTRO_ID_KEY, rid);
+                }
+              } catch (e) {}
               window.location.href = nextStep;
               return;
             }
