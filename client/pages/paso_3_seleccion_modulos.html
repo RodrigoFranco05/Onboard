@@ -40,7 +40,8 @@
 
       <h1 id="paso3-titulo" class="card__title">Selecciona los módulos para tu empresa</h1>
       <p class="card__subtitle">
-        Elige las herramientas que mejor se adapten a tus necesidades. Podrás cambiarlas más adelante.
+        Elige las herramientas para tu empresa. Transacciones (caja, cuentas y gastos) viene incluida.
+        Después no podrás activar otros módulos desde el sistema.
       </p>
 
       <form action="#" method="post">
@@ -97,7 +98,7 @@
                 </svg>
                 <span class="module-card__title-text">Inventario</span>
               </span>
-              <p class="module-card__desc">Gestiona todos tus inventarios, stock y almacenes.</p>
+              <p class="module-card__desc">Gestiona todos tus inventarios, stock y almacenes. Si elegís Ventas, se activa solo.</p>
             </span>
           </label>
 
@@ -115,7 +116,7 @@
                 </svg>
                 <span class="module-card__title-text">Caja y finanzas</span>
               </span>
-              <p class="module-card__desc">Gestiona tus finanzas, flujos de caja y bancos.</p>
+              <p class="module-card__desc">Incluida en Transacciones en esta demo. La marcás para el registro; el menú ya viene activo.</p>
             </span>
           </label>
 
@@ -133,7 +134,7 @@
                 </svg>
                 <span class="module-card__title-text">Cuentas corrientes</span>
               </span>
-              <p class="module-card__desc">Deudas, cuentas por cobrar y por pagar.</p>
+              <p class="module-card__desc">Incluida en Transacciones en esta demo. La marcás para el registro; el menú ya viene activo.</p>
             </span>
           </label>
 
@@ -155,8 +156,8 @@
             </span>
           </label>
 
-          <label class="module-card module-card--wide">
-            <input class="module-card__input" type="checkbox" name="modulos[]" value="logistica" />
+          <label class="module-card module-card--wide module-card--disabled">
+            <input class="module-card__input" type="checkbox" name="modulos[]" value="logistica" disabled />
             <span class="module-card__check" aria-hidden="true">
               <svg class="module-card__check-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
@@ -168,8 +169,9 @@
                   <path d="M2 17h17l3-8H6l-2 8zM6 17l2-8h10" /><circle cx="8" cy="19" r="2" /><circle cx="17" cy="19" r="2" />
                 </svg>
                 <span class="module-card__title-text">Transporte y logística</span>
+                <span class="module-card__badge">Próximamente</span>
               </span>
-              <p class="module-card__desc">Gestión de flotas, rutas y envíos.</p>
+              <p class="module-card__desc">Gestión de flotas, rutas y envíos. Aún no está disponible en la demo.</p>
             </span>
           </label>
         </div>

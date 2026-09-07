@@ -51,6 +51,27 @@
     } catch (e) {}
   }
 
+  /** @param {HTMLFormElement} form */
+  function syncDependentModules(form) {
+    var ventas = form.querySelector('input[type="checkbox"][value="ventas"]');
+    var inventario = form.querySelector('input[type="checkbox"][value="inventario"]');
+    var logistica = form.querySelector('input[type="checkbox"][value="logistica"]');
+
+    if (logistica) {
+      logistica.checked = false;
+      logistica.disabled = true;
+    }
+
+    if (ventas && inventario) {
+      if (ventas.checked) {
+        inventario.checked = true;
+        inventario.disabled = true;
+      } else {
+        inventario.disabled = false;
+      }
+    }
+  }
+
   /** @param {HTMLFormElement} form @returns {Record<string, boolean>} */
   function collectModulos(form) {
     var result = {};
@@ -58,6 +79,8 @@
       var input = form.querySelector('input[type="checkbox"][value="' + name + '"]');
       result[name] = input ? input.checked : false;
     });
+    if (result.ventas) result.inventario = true;
+    result.logistica = false;
     return result;
   }
 
@@ -66,8 +89,9 @@
     MODULE_NAMES.forEach(function (name) {
       if (!(name in stored)) return;
       var input = form.querySelector('input[type="checkbox"][value="' + name + '"]');
-      if (input) input.checked = !!stored[name];
+      if (input && !input.disabled) input.checked = !!stored[name];
     });
+    syncDependentModules(form);
   }
 
   function clearBanner(el) {
@@ -118,8 +142,11 @@
     var backStep = main.getAttribute("data-back-step") || "paso_2_datos_personales.html";
 
     applyStoredToForm(form, readStoredModulos());
+    syncDependentModules(form);
+    writeStoredModulos(collectModulos(form));
 
     form.addEventListener("change", function () {
+      syncDependentModules(form);
       writeStoredModulos(collectModulos(form));
     });
 

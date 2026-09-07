@@ -8,6 +8,7 @@ const { initializeTenantSchema } = require("../services/tenantInitService");
 const registroModel = require("../models/registroModel");
 const Modulos = require("../models/Modulos");
 const { HttpError } = require("../utils/httpError");
+const { normalizeModulosFlags } = require("../services/onboardingModulosAllowlist");
 
 const MAX_INTENTOS_TENANT = 3;
 
@@ -236,14 +237,15 @@ async function userModules(req, res) {
 
   ensureEmailVerified(registro);
 
+  const flags = normalizeModulosFlags(payload.modulos);
   const existing = await Modulos.findOne({ where: { registroId: registro.id } });
 
   let row;
   if (existing) {
-    await existing.update(payload.modulos);
+    await existing.update(flags);
     row = existing.get({ plain: true });
   } else {
-    const created = await Modulos.create({ registroId: registro.id, ...payload.modulos });
+    const created = await Modulos.create({ registroId: registro.id, ...flags });
     row = created.get({ plain: true });
   }
 
@@ -272,6 +274,15 @@ async function generateTenant(req, res) {
     });
   }
 
+  const modulosRow = await Modulos.findOne({ where: { registroId: submission.id } });
+  if (!modulosRow) {
+    throw new HttpError(
+      400,
+      "Falta la seleccion de modulos. Completa el paso 3 antes de generar el ambiente.",
+      "MODULES_NOT_FOUND"
+    );
+  }
+
   const tenant = await createTenantWithRetries({
     email: submission.correo,
     correo: submission.correo,
@@ -281,8 +292,26 @@ async function generateTenant(req, res) {
     negocio: submission.negocio
   });
 
+  const url = buildTenantUrl(tenant);
+  const password = tenantNameGenerator.randomPassword();
+  const user = submission.correo;
+
   try {
-    await initializeTenantSchema(tenant);
+    await initializeTenantSchema(
+      tenant,
+      {
+        usuario: user,
+        email: user,
+        nombre: submission.nombre,
+        apellido: submission.apellido,
+        telefono: submission.telefono,
+        password
+      },
+      {
+        registroId: submission.id,
+        modulos: modulosRow.get({ plain: true })
+      }
+    );
   } catch (initError) {
     console.error(`[generateTenant] Falla inicializando tenant "${tenant}":`, initError);
     throw new HttpError(
@@ -291,10 +320,6 @@ async function generateTenant(req, res) {
       "TENANT_INIT_FAILED"
     );
   }
-
-  const url = buildTenantUrl(tenant);
-  const password = tenantNameGenerator.randomPassword();
-  const user = submission.correo;
 
   const updatedSubmission = await registroModel.updateTenantResult(submission.id, {
     tenant,

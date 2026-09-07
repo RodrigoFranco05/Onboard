@@ -5,7 +5,8 @@
   Flujo:
     1. Genera un nombre de tenant a partir del payload.
     2. Crea fisicamente la base de datos en Postgres.
-    3. Devuelve { tenant, url, user, password }.
+    3. Inicializa el esquema y carga el usuario admin del payload.
+    4. Devuelve { tenant, url, user, password }.
 
   Notas:
     - El script consume el mismo servicio que usa el controller, asi que la logica
@@ -18,6 +19,7 @@ require("dotenv").config();
 
 const tenantDbService = require("../services/tenantDbService");
 const tenantNameGenerator = require("../services/tenantNameGenerator");
+const { initializeTenantSchema } = require("../services/tenantInitService");
 
 const MAX_INTENTOS = 3;
 
@@ -51,12 +53,23 @@ async function main() {
 
   const payload = JSON.parse(payloadRaw);
   const tenant = await createTenantWithRetries(payload);
+  const user = payload.email || payload.correo || `admin@${tenant}.demo`;
+  const password = tenantNameGenerator.randomPassword();
+
+  await initializeTenantSchema(tenant, {
+    usuario: user,
+    email: user,
+    nombre: payload.nombre,
+    apellido: payload.apellido,
+    telefono: payload.telefono,
+    password
+  });
 
   const response = {
     tenant,
     url: buildTenantUrl(tenant),
-    user: payload.email || payload.correo || `admin@${tenant}.demo`,
-    password: tenantNameGenerator.randomPassword()
+    user,
+    password
   };
 
   process.stdout.write(JSON.stringify(response));

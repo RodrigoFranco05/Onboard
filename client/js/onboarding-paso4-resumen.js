@@ -27,7 +27,7 @@
     caja: "Caja y finanzas",
     cuentas: "Cuentas corrientes",
     rrhh: "Recursos humanos",
-    logistica: "Transporte y logística"
+    logistica: "Transporte y logística (próximamente)"
   };
 
   function readJson(key) {

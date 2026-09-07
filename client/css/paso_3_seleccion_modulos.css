@@ -242,6 +242,34 @@ body {
   color: var(--on-primary);
 }
 
+.module-card__badge {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--surface-input);
+  border: 1px solid var(--outline);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.module-card--disabled,
+.module-card:has(.module-card__input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.module-card--disabled:hover,
+.module-card:has(.module-card__input:disabled):hover {
+  border-color: var(--outline);
+}
+
+.module-card:has(.module-card__input:disabled) {
+  pointer-events: none;
+}
+
 .module-card__desc {
   margin: 0;
   font-size: 14px;

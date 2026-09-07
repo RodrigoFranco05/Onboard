@@ -97,7 +97,7 @@
     var root = document.getElementById("onboarding-email");
     var form = document.getElementById("email-step-form");
     var input = document.getElementById("email");
-    var submitBtn = form ? form.querySelector('[type="button"]') : null;
+    var submitBtn = form ? form.querySelector(".btn-primary") : null;
     var fieldErrorEl = document.getElementById("email-field-error");
     var bannerEl = document.getElementById("email-step-banner");
     return { root, form, input, submitBtn, fieldErrorEl, bannerEl };
@@ -248,4 +248,12 @@
   }
 
   window.emailVerification = emailVerification;
+
+  var form = document.getElementById("email-step-form");
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      emailVerification();
+    });
+  }
 })();
